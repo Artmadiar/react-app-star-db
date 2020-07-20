@@ -1,0 +1,21 @@
+.personDetails {
+  display: flex;
+  margin: 0.5rem 1rem;
+}
+
+.personDetails img {
+  width: 200px;
+  height: 200px;
+}
+
+.personDetails h2 {
+  padding-left: 1rem;
+}
+
+.personDetails ul {
+  list-style: none;
+}
+
+.personDetails ul li span {
+  padding-right: 0.3rem;
+}

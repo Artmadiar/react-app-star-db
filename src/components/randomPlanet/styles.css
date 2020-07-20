@@ -1,0 +1,21 @@
+.randomPlanet {
+  display: flex;
+  margin: 0.5rem 1rem;
+}
+
+.randomPlanet img {
+  width: 200px;
+  height: 200px;
+}
+
+.randomPlanet h2 {
+  padding-left: 1rem;
+}
+
+.randomPlanet ul {
+  list-style: none;
+}
+
+.randomPlanet ul li span {
+  padding-right: 0.3rem;
+}
