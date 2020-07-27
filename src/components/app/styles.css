@@ -5,3 +5,7 @@
 .appBody {
   display: flex;
 }
+
+.togglePlanet {
+  margin-left: 32px;
+}

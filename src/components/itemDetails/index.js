@@ -1,7 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, Children, cloneElement } from 'react';
 import SwapiService from '../../services/SwapiService';
 import ErrorView from '../ErrorView';
 import './styles.css';
+
+const Record = ({ item, field, label }) => {
+  return (
+    <li key={field}>
+      <span> {label}: </span>
+      <span> {item[field]} </span>
+    </li>
+  )
+};
+
+export { Record };
 
 export default class PersonDetails extends Component {
   state = {
@@ -55,22 +66,17 @@ export default class PersonDetails extends Component {
       </div>
     }
 
-    const { itemData: { id, name, ...rest } } = this.state;
+    const { itemData } = this.state;
 
     return (
       <div className="itemDetails">
-        <img src={`https://starwars-visualguide.com/assets/img/${this.props.entity}/${id}.jpg`} alt="" className={this.props.entity} />
+        <img src={`https://starwars-visualguide.com/assets/img/${this.props.entity}/${itemData.id}.jpg`} alt="" className={this.props.entity} />
         <div>
-          <h2>{name}</h2>
+          <h2>{itemData.name}</h2>
           <ul>
-            {Object.entries(rest).map(([key, value]) => <li key={key}>
-                <span>
-                  {key}: 
-                </span>
-                <span>
-                  {value}
-                </span>
-              </li>)}              
+            {Children.map(this.props.children, (child) => {
+              return cloneElement(child, { item: itemData });
+            })}
           </ul>
         </div>
       </div>
