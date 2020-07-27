@@ -18,9 +18,9 @@ export default class RandomPlanet extends Component {
 
   async nextValue() {
     try {
-      const max = 23;
-      const randomId = (Math.ceil(Math.random() * max)) + 1;
-      
+      const max = 19;
+      const randomId = (Math.ceil(Math.random() * max)) + 3;
+  
       const planet = await this.swapi.getPlanet(randomId);
       this.setState({
         planet,
