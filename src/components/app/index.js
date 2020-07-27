@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './styles.css';
 
+import SwapiService from '../../services/SwapiService';
+
 import Header from '../header';
 import RandomPlanet from '../randomPlanet';
 import ErrorView from '../ErrorView';
-import PeoplePage from '../PeoplePage';
-// import PlanetDetails from '../planetDetails';
-// import StarshipDetails from '../starshipDetails';
+import ListPage from '../ListPage';
 
 export default class App extends Component {
   state = {
@@ -14,18 +14,14 @@ export default class App extends Component {
     error: false,
   };
 
+  swapi = new SwapiService();
+
   togglePlanet = () => {
     this.setState((state) => {
       return {
         showRandomPlanet: !state.showRandomPlanet,
       }
     });
-  }
-
-  onPersonSelected = (id) => {
-    this.setState({
-      selectedPerson: id,
-    })
   }
 
   // global Error boundary
@@ -43,9 +39,9 @@ export default class App extends Component {
         <Header />
         {this.state.showRandomPlanet && <RandomPlanet />}
         <button type="button" className="btn" onClick={this.togglePlanet} >{this.state.showRandomPlanet ? 'hide' : 'show'} random planet</button>
-        <PeoplePage />
-        {/* <PlanetPage />
-        <StarshipPage /> */}
+        <ListPage getListData={this.swapi.getAllPeople} getItemData={this.swapi.getPerson} entity="characters" />
+        <ListPage getListData={this.swapi.getAllPlanets} getItemData={this.swapi.getPlanet} entity="planets" />
+        <ListPage getListData={this.swapi.getAllStarships} getItemData={this.swapi.getStarship} entity="starships" />
       </div>
     );
   }

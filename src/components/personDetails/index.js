@@ -11,7 +11,7 @@ export default class PersonDetails extends Component {
 
   swapi = new SwapiService();
 
-  componentDidUpdate( prevProps, prevState) {
+  componentDidUpdate( prevProps, prevState) {    
     if (this.props.personId !== prevProps.personId) {
       this.updatePerson();
     }

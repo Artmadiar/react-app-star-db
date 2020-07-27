@@ -1,29 +1,52 @@
 import React, { Component } from 'react';
-import SwapiService from '../../services/SwapiService';
 import Spinner from '../spinner';
+import ErrorView from '../ErrorView';
 import './styles.css';
 
 export default class ItemList extends Component {
   state = {
-    peopleList: null,
+    list: null,
     loading: true,
+    error: false,
   };
 
-  swapi = new SwapiService();
-
   componentDidMount() {
-    this.swapi.getAllPeople()
-      .then((people) => {
+    const { getListData } = this.props;
+    getListData()
+      .then((data) => {
         this.setState({
-          peopleList: people,
+          list: data,
           loading: false,
         })
       })
-      .catch();
+      .catch((err) => {
+        console.error(err);
+        this.setState({
+          error: true,
+          loading: false,
+        });
+      });
+  }
+
+  presentItemInList = (item) => {
+    switch (this.props.entity) {
+      case 'characters':
+        return `${item.name} ${item.birthYear}`;
+      case 'planets':
+        return `${item.name} ${item.diameter}`;
+      case 'starships':
+        return `${item.name} ${item.model}`;
+        default:
+          return `${item.name}`;
+    }
   }
 
   render() {
-    const { peopleList, loading } = this.state;
+    const { list, error, loading } = this.state;
+
+    if (error) {
+      return <ErrorView />;
+    }
 
     if (loading) {
       return <Spinner />;
@@ -31,8 +54,8 @@ export default class ItemList extends Component {
 
     return (
       <ul className="itemList">
-        {peopleList.map((person) => <li key={person.id} onClick={() => this.props.onItemSelected(person.id)} >
-          {person.name}
+        {list.map((item) => <li key={item.id} onClick={() => this.props.onItemSelected(item.id)} >
+          {this.presentItemInList(item)}
         </li>
         )}
       </ul>
