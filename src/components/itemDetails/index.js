@@ -1,6 +1,4 @@
 import React, { Component, Children, cloneElement } from 'react';
-import SwapiService from '../../services/SwapiService';
-import ErrorView from '../ErrorView';
 import './styles.css';
 
 const Record = ({ item, field, label }) => {
@@ -16,66 +14,39 @@ export { Record };
 
 export default class PersonDetails extends Component {
   state = {
-    itemData: null,
-    error: false,
-  };
-
-  swapi = new SwapiService();
-
-  componentDidUpdate( prevProps, prevState) {    
-    if (this.props.itemId !== prevProps.itemId) {
-      this.updateItem();
-    }
+    data: null,
   }
-
+  
   componentDidMount() {
-    this.updateItem();
-  }
-
-  componentDidCatch() {
-    this.setState({ error: true });
-  }
-
-  updateItem() {
-    const { itemId } = this.props;
-    if (!itemId) return;
-
-    this.props.getItemData(itemId)
-      .then((itemData) => {
-        this.setState({
-          itemData,
-          error: false,
-        });
+    const { getData, itemId } = this.props;
+    
+    getData(itemId)
+      .then((data) => {
+        this.setState({ data });
       })
       .catch((err) => {
         console.error(err);
-        this.setState({
-          error: true,
-        });
+        this.setState({ data: null });
       })
   }
 
   render() {
-    if (this.state.error) {
-      return <ErrorView />;
-    }
+    const { data } = this.state;
 
-    if (!this.state.itemData) {
+    if (!data) {
       return <div>
         Select an item from the list
       </div>
     }
 
-    const { itemData } = this.state;
-
     return (
       <div className="itemDetails">
-        <img src={`https://starwars-visualguide.com/assets/img/${this.props.entity}/${itemData.id}.jpg`} alt="" className={this.props.entity} />
+        <img src={`https://starwars-visualguide.com/assets/img/${this.props.entity}/${data.id}.jpg`} alt="" className={this.props.entity} />
         <div>
-          <h2>{itemData.name}</h2>
+          <h2>{data.name}</h2>
           <ul>
             {Children.map(this.props.children, (child) => {
-              return cloneElement(child, { item: itemData });
+              return cloneElement(child, { item: data });
             })}
           </ul>
         </div>

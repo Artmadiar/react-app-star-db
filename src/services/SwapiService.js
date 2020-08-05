@@ -9,7 +9,7 @@ export default class SwapiService {
     try {
       const data = localStorage.getItem('cache');
       if (!data) {
-        return;
+        return {};
       }
 
       const json = JSON.parse(data);
