@@ -7,7 +7,7 @@ const swapi = new SwapiService();
 
 // onItemSelected={this.onItemSelected}
 
-const withChildFunction = (Wrapped, fn) => {
+const withChildFunction = (fn) => (Wrapped) => {
   return (props) => {
     return <Wrapped {...props}>
       {fn}
@@ -16,18 +16,23 @@ const withChildFunction = (Wrapped, fn) => {
 };
 
 
-const PersonList = withData(
-    withChildFunction(ItemList, item => item.name),
-  swapi.getAllPeople,
+const PersonList = withData(swapi.getAllPeople)(
+  withChildFunction(item => item.name)(
+    ItemList
+  )
 );
-const PlanetList = withData(
-    withChildFunction(ItemList, item => item.name),
-    swapi.getAllPlanets,
+const PlanetList = withData(swapi.getAllPlanets)(
+  withChildFunction(item => item.name)(
+    ItemList
+  )
 );
-const StarshipList = withData(
-    withChildFunction(ItemList, item => item.name),
-    swapi.getAllStarships,
+
+const StarshipList = withData(swapi.getAllStarships)(
+  withChildFunction(item => item.name)(
+    ItemList
+  )
 );
+
 
 export {
   PersonList,

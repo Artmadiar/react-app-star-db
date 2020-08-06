@@ -3,10 +3,7 @@ import React, { Component } from 'react';
 import Spinner from '../../spinner';
 import ErrorView from '../../ErrorView';
 
-// import SwapiService from '../../../services/SwapiService';
-// const swapi = new SwapiService();
-
-export default (View, getData) => {
+export default (getData) => (View) => {
   return class extends Component {
     state = {
       data: null,
