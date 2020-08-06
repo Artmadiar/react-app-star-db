@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 
 import SwapiService from '../../services/SwapiService';
 
-import ItemList from '../itemList';
-import ItemDetails, { Record } from '../itemDetails';
 import ErrorView from '../ErrorView';
-import Row from '../Row';
-import ErrorBoundry from '../ErrorBoundry';
 
 import './styles.css';
 

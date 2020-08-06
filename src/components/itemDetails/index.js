@@ -12,22 +12,34 @@ const Record = ({ item, field, label }) => {
 
 export { Record };
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
   state = {
     data: null,
   }
   
-  componentDidMount() {
+  componentDidUpdate( prevProps, prevState) {
+    if (
+        this.props.itemId !== prevProps.itemId ||
+        this.props.getData !== prevProps.getData
+      ) {
+        this.updateData();
+    }
+  }
+
+  updateData() {
     const { getData, itemId } = this.props;
-    
     getData(itemId)
-      .then((data) => {
-        this.setState({ data });
-      })
-      .catch((err) => {
-        console.error(err);
-        this.setState({ data: null });
-      })
+    .then((data) => {
+      this.setState({ data });
+    })
+    .catch((err) => {
+      console.error(err);
+      this.setState({ data: null });
+    })
+  }
+
+  componentDidMount() {
+    this.updateData();
   }
 
   render() {

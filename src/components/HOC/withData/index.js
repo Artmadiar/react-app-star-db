@@ -14,15 +14,6 @@ export default (View, getData) => {
       error: false,
     };
 
-    componentDidUpdate( prevProps, prevState) {
-      if (Object.prototype.hasOwnProperty.call(this.props, 'itemId')) {
-        if (this.props.itemId !== prevProps.itemId) {
-          console.log('component did update', this.props.itemId);
-          this.fetchData();
-        }
-      }
-    }
-
     fetchData() {
       getData(this.props.itemId)
         .then((data) => {
