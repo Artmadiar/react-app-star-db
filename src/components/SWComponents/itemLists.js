@@ -2,6 +2,7 @@ import React from 'react';
 import ItemList from '../itemList';
 import withData from '../HOC/withData';
 import SwapiService from '../../services/SwapiService';
+import compose from '../HOC/compose';
 
 const swapi = new SwapiService();
 
@@ -16,22 +17,20 @@ const withChildFunction = (fn) => (Wrapped) => {
 };
 
 
-const PersonList = withData(swapi.getAllPeople)(
-  withChildFunction(item => item.name)(
-    ItemList
-  )
-);
-const PlanetList = withData(swapi.getAllPlanets)(
-  withChildFunction(item => item.name)(
-    ItemList
-  )
-);
+const PersonList = compose(
+  withData(swapi.getAllPeople),
+  withChildFunction(item => item.name),
+)(ItemList);
 
-const StarshipList = withData(swapi.getAllStarships)(
-  withChildFunction(item => item.name)(
-    ItemList
-  )
-);
+const PlanetList = compose(
+  withData(swapi.getAllPlanets),
+  withChildFunction(item => item.name),
+)(ItemList);
+
+const StarshipList = compose(
+  withData(swapi.getAllStarships),
+  withChildFunction(item => item.name),
+)(ItemList);
 
 
 export {

@@ -10,6 +10,22 @@ export default class RandomPlanet extends Component {
   swapi = new SwapiService();
   timer;
 
+
+  static defaultProps = {
+    interval: 8000,
+  }
+
+  static propTypes = {
+    interval: (props, propName, componentName) => {
+      const value = props[propName];
+      console.log({ props, propName, value });
+      if (isNaN(parseInt(value, 10))) {
+        return new Error('Random planet: Interval is not a number');
+      }
+      return null;
+    },
+  };
+
   state = {
     planet: {},
     loading: true,
@@ -47,7 +63,7 @@ export default class RandomPlanet extends Component {
 
     this.timer = setInterval(() => {
       this.nextValue();
-    }, 8000);
+    }, this.props.interval);
   }
 
   componentWillUnmount() {
