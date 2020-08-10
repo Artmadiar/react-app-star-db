@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './styles.css';
 
 // export default function Row({ children: [ left, right ] }) {
-export default function Row({ left, right }) {
+function Row({ left, right }) {
   return (
     <div className="appBody">
       <div className="left">
@@ -14,3 +15,10 @@ export default function Row({ left, right }) {
     </div>
   );
 }
+
+Row.propTypes = {
+  left: PropTypes.node,
+  right: PropTypes.node,
+};
+
+export default Row;

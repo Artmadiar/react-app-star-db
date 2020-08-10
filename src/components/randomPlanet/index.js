@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import SwapiService from '../../services/SwapiService';
 import Spinner from '../spinner';
 import PlanetView from './PlanetView';
@@ -16,14 +17,7 @@ export default class RandomPlanet extends Component {
   }
 
   static propTypes = {
-    interval: (props, propName, componentName) => {
-      const value = props[propName];
-      console.log({ props, propName, value });
-      if (isNaN(parseInt(value, 10))) {
-        return new Error('Random planet: Interval is not a number');
-      }
-      return null;
-    },
+    interval: PropTypes.number,
   };
 
   state = {

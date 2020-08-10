@@ -43,7 +43,7 @@ export default class App extends Component {
 
             <Header onServiceChange={this.onServiceChange} />
     
-            <RandomPlanet interval={'a'} />
+            <RandomPlanet />
 
             <pages.PeoplePage />
             <pages.PlanetPage />
