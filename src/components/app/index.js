@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './styles.css';
 
 import SwapiService from '../../services/SwapiService';
@@ -8,11 +9,7 @@ import {SwapiServiceProvider} from '../swapiServiceContext';
 
 import Header from '../header';
 import RandomPlanet from '../randomPlanet';
-import pages, {
-  // PeoplePage,
-  // PlanetPage,
-  // StarshipPage,
-} from '../SWComponents/pages';
+import pages from '../SWComponents/pages';
 
 const swapi = new SwapiService();
 const dummySwapi = new DummySwapiService();
@@ -40,15 +37,19 @@ export default class App extends Component {
       <div className="app">
         <ErrorBoundary>
           <SwapiServiceProvider value={this.state.swapi} >
+            <Router>
 
-            <Header onServiceChange={this.onServiceChange} />
-    
-            <RandomPlanet />
+              <Header onServiceChange={this.onServiceChange} />
 
-            <pages.PeoplePage />
-            <pages.PlanetPage />
-            <pages.StarshipPage />
+              <Route path="/" exact render={() => (<h4 style={{paddingLeft: '15px'}}>Welcome back, padavan!</h4>)} />
 
+              <RandomPlanet />
+
+              <Route path="/people" component={pages.PeoplePage} />
+              <Route path="/planets" component={pages.PlanetPage} />
+              <Route path="/starships" component={pages.StarshipPage} />
+
+            </Router>
           </SwapiServiceProvider>
         </ErrorBoundary>
     </div>

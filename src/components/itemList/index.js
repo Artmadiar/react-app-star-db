@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './styles.css';
 
 export default class ItemList extends Component {
-  defaultProps = {
+  static defaultProps = {
     onItemSelected: () => {},
   }
 
